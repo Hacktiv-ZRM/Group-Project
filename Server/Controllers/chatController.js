@@ -1,51 +1,53 @@
-const chatModel = require('../Models/ChatModel')
+const chatModel = require("../Models/chatModel");
 
 const createChat = async (req, res) => {
-    const { firstId, secondId } = req.body
+  const { senderId, receiverId } = req.body;
+  try {
+    // check if a chat already exist
+    const chat = await chatModel.findOne({
+      members: { $all: [senderId, receiverId] },
+    });
 
-    try {
-        const chat = await chatModel.findOne({
-            members: { $all: [firstId, secondId] },
-        })
+    if (chat) return res.status(200).json(chat);
 
-        if (chat) return res.status(200).json(chat)
+    const newChat = new chatModel({
+      members: [senderId, receiverId],
+    });
 
-        const newChat = new chatModel({
-            members: [firstId, secondId],
-        })
+    const response = await newChat.save();
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
-        const response = await newChat.save()
-        res.status(200).json(response)
-    } catch (error) {
-        console.log(error)
-        res.status(500).json(error)
-    }
-}
+const userChats = async (req, res) => {
+  const userId = req.params.userId;
 
-const findUserChats = async (req, res) => {
-    const userId = req.params.userId
+  try {
+    const chats = await chatModel.find({
+      members: { $in: [userId] },
+    });
 
-    try {
-        const chats = await chatModel.find({ members: { $in: [userId] } })
-        res.status(200).json(chats)
-    } catch (error) {
-        console.log(error)
-        res.status(500).json(error)
-    }
-}
+    res.status(200).json(chats);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 const findChat = async (req, res) => {
-    const { firstId, secondId } = req.params
+  const firstId = req.params.firstId;
+  const secondId = req.params.secondId;
 
-    try {
-        const chat = await chatModel.findOne({
-            members: { $all: [firstId, secondId] },
-        })
-        res.status(200).json(chat)
-    } catch (error) {
-        console.log(error)
-        res.status(500).json(error)
-    }
-}
+  try {
+    const chat = await chatModel.findOne({
+      members: { $all: [firstId, secondId] },
+    });
 
-module.exports = { createChat, findUserChats, findChat }
+    res.status(200).json(chat);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = { createChat, userChats, findChat };

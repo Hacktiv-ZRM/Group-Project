@@ -1,14 +1,14 @@
-const express = require('express')
+const express = require("express");
 const {
-    createChat,
-    findUserChats,
-    findChat,
-} = require('../Controllers/chatController')
+  createChat,
+  userChats,
+  findChat,
+} = require("../Controllers/chatController");
 
-const router = express.Router()
+const router = express.Router();
 
-router.post('/', createChat)
-router.get('/:userId', findUserChats)
-router.get('/find/:firstId/:secondId', findChat)
+router.post("/", createChat);
+router.get("/:userId", userChats);
+router.get("/find/:firstId/:secondId", findChat);
 
-module.exports = router
+module.exports = router;
