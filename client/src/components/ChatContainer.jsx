@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import socketIOClient from 'socket.io-client'
-import ChatBoxReciever, { ChatBoxSender } from './ChatBox'
+import ChatBoxReciever, { ChatBoxSender } from './ChatBox.jsx'
 import InputText from './InputText'
-import UserLogin from './UserLogin'
+import UserLogin from './UserLogin.jsx'
 import {
     doc,
     setDoc,
