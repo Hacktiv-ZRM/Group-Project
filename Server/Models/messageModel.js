@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const messageSchema = new mongoose.Schema(
   {
     chatId: String,
-    SenderId: String,
+    senderId: String,
     text: String,
   },
   {
@@ -11,6 +11,6 @@ const messageSchema = new mongoose.Schema(
   }
 );
 
-const messageModel = mongoose.model("Message", messageSchema);
+const Message = mongoose.model("Message", messageSchema);
 
-module.exports = messageModel;
+module.exports = Message;
