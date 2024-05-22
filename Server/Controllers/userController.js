@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
-const userModel = require("../Models/userModel");
+const userModel = require("../Models/UserModel");
 
 const createToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_SECRET);
