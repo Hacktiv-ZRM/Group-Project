@@ -1,1 +1,1 @@
-RPS Application
+Chat App Application
